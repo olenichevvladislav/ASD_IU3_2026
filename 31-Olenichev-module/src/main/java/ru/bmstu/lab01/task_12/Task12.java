@@ -17,16 +17,35 @@ public class Task12 {
     /** Значение индекса, означающее «пара не найдена». */
     private static final int NOT_FOUND = -1;
 
-    /**
+     /**
      * Ищет пару индексов (i, j), i &lt; j, с суммой target.
      *
-     * <p>
+     * <p>Для каждого left перебираем right от left+1 до конца массива.
+     * Возрастание left и right обеспечивает, что первая найденная пара
+     * имеет минимальный left, а при равном left — минимальный right.
      *
      * @param array  входной массив чисел
      * @param target искомая сумма
      * @return пара индексов или {-1, -1}, если пары нет
      */
     public static int[] findPair(int[] array, long target) {
+        int arrayLength = array.length;
+
+        // Внешний цикл перебирает left по возрастанию: первая найденная
+        // пара гарантированно имеет минимальный left.
+        for (int left = 0; left < arrayLength; left++) {
+            int right = left + 1;
+            // Внутренний цикл перебирает right от left+1: неравенство
+            // left < right и минимальность right при данном left.
+            while (right < arrayLength) {
+                long sum = (long) array[left] + (long) array[right];
+                if (sum == target) {
+                    return new int[] {left, right};
+                }
+                right++;
+            }
+        }
+
         return new int[] {NOT_FOUND, NOT_FOUND};
     }
 
