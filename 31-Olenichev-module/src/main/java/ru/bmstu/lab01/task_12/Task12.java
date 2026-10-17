@@ -58,10 +58,14 @@ public class Task12 {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
+        System.err.print("Введите длину массива: ");
         int arrayLength = scanner.nextInt();
+
+        System.err.print("Введите искомую сумму: ");
         long targetSum = scanner.nextLong();
 
         int[] numbers = new int[arrayLength];
+        System.err.print("Введите " + arrayLength + " чисел через пробел: ");
         for (int index = 0; index < arrayLength; index++) {
             numbers[index] = scanner.nextInt();
         }
