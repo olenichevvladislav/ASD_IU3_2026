@@ -70,4 +70,14 @@ class Task12Test {
         int[] actual = Task12.findPair(new int[] {1, 2, 3, 4, 96}, 100);
         assertArrayEquals(expected, actual);
     }
+    
+    
+    @Test
+    void shouldHandleIntegerOverflowInSum() {
+        int[] expected = {0, 1};
+        int[] actual = Task12.findPair(
+                new int[] {Integer.MAX_VALUE, Integer.MAX_VALUE},
+                2L * Integer.MAX_VALUE);
+        assertArrayEquals(expected, actual);
+    }
 }
