@@ -17,15 +17,28 @@ import java.util.Scanner;
  */
 public class Task47 {
 
-    /**
+/**
      * Поворачивает матрицу на 90 градусов по часовой стрелке.
      * 
      * @param matrix исходная матрица размером n x m
      * @return новая повернутая матрица размером m x n
      */
     public int[][] rotate90(int[][] matrix) {
-        // implement logic
-        return new int[0][0];
+        int n = matrix.length;
+        if (n == 0) return new int[0][0];
+        int m = matrix[0].length;
+        
+        // Создаем новую матрицу, где строки и столбцы поменялись местами
+        int[][] result = new int[m][n];
+        
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                // Элемент из [i][j] переходит в [j][n - 1 - i]
+                result[j][n - 1 - i] = matrix[i][j];
+            }
+        }
+        
+        return result;
     }
 
     public static void main(String[] args) {
