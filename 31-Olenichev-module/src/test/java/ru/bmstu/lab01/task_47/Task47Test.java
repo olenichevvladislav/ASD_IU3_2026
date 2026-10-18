@@ -32,4 +32,24 @@ public class Task47Test {
         int[][] expected = {{4, 1}, {5, 2}, {6, 3}};
         Assertions.assertArrayEquals(expected, solver.rotate90(a));
     }
+
+     @Test
+    public void testSingleRow() {
+        // Матрица 1x3
+        // 1 2 3
+        // После поворота станет 3x1:
+        // 1
+        // 2
+        // 3
+        int[][] a = {{1, 2, 3}};
+        int[][] expected = {{1}, {2}, {3}};
+        Assertions.assertArrayEquals(expected, solver.rotate90(a));
+    }
+
+    @Test
+    public void testEmptyMatrix() {
+        int[][] a = {};
+        int[][] expected = {};
+        Assertions.assertArrayEquals(expected, solver.rotate90(a));
+    }
 }
