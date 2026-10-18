@@ -16,7 +16,7 @@ import java.util.Scanner;
  */
 public class Task58 {
 
-    /**
+ /**
      * Создает и заполняет матрицу змейкой.
      * 
      * @param n количество строк
@@ -24,8 +24,23 @@ public class Task58 {
      * @return заполненная матрица
      */
     public int[][] fillSnake(int n, int m) {
-        // implement logic
-        return new int[0][0];
+        int[][] matrix = new int[n][m];
+        int counter = 1;
+        
+        for (int i = 0; i < n; i++) {
+            if (i % 2 == 0) {
+                // Четная строка (0, 2, 4...): заполняем слева направо
+                for (int j = 0; j < m; j++) {
+                    matrix[i][j] = counter++;
+                }
+            } else {
+                // Нечетная строка (1, 3, 5...): заполняем справа налево
+                for (int j = m - 1; j >= 0; j--) {
+                    matrix[i][j] = counter++;
+                }
+            }
+        }
+        return matrix;
     }
 
     public static void main(String[] args) {
