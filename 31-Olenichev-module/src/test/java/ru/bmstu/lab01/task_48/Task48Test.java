@@ -29,4 +29,20 @@ public class Task48Test {
         solver.transposeInPlace(a);
         Assertions.assertArrayEquals(expected, a);
     }
+
+    @Test
+    public void test1x1Matrix() {
+        int[][] a = {{42}};
+        int[][] expected = {{42}};
+        solver.transposeInPlace(a);
+        Assertions.assertArrayEquals(expected, a);
+    }
+    
+    @Test
+    public void testEmptyMatrix() {
+        int[][] a = {};
+        int[][] expected = {};
+        solver.transposeInPlace(a);
+        Assertions.assertArrayEquals(expected, a);
+    }
 }
