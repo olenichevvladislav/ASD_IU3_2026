@@ -47,7 +47,24 @@ public class Task18 {
             }
         }
         
-        // отсортировать массив evens по убыванию и вернуть в массив a
+        // 3. Сортируем массив evens по убыванию (пузырьком)
+        for (int i = 0; i < evens.length - 1; i++) {
+            for (int j = 0; j < evens.length - 1 - i; j++) {
+                if (evens[j] < evens[j + 1]) {
+                    int temp = evens[j];
+                    evens[j] = evens[j + 1];
+                    evens[j + 1] = temp;
+                }
+            }
+        }
+
+        // 4. Возвращаем отсортированные чётные на их места
+        index = 0;
+        for (int i = 0; i < a.length; i++) {
+            if (a[i] % 2 == 0) {
+                a[i] = evens[index++];
+            }
+        }
     }
 
     public static void main(String[] args) {
