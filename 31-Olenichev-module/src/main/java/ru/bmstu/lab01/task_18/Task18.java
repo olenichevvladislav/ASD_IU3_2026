@@ -24,7 +24,30 @@ public class Task18 {
      * @param a исходный массив целых чисел
      */
     public void sortEvenDescending(int[] a) {
-        // implement logic
+        // 1. Считаем количество чётных чисел
+        int evenCount = 0;
+        for (int num : a) {
+            if (num % 2 == 0) {
+                evenCount++;
+            }
+        }
+
+        // Если чётных нет или одно — сортировать нечего
+        if (evenCount <= 1) {
+            return;
+        }
+
+        // 2. Собираем чётные числа в отдельный массив
+        int[] evens = new int[evenCount];
+        int index = 0;
+        for (int num : a) {
+            if (num % 2 == 0) {
+                evens[index] = num;
+                index++;
+            }
+        }
+        
+        // отсортировать массив evens по убыванию и вернуть в массив a
     }
 
     public static void main(String[] args) {
