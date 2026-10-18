@@ -1,13 +1,16 @@
 package ru.bmstu.lab01.task_12;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 /**
  * Класс для решения задачи 12: поиск пары элементов с заданной суммой.
  * <p>
- * Ключевая особенность: используется перебор всех возможных пар 
- * с помощью двух вложенных циклов. Это гарантирует, что мы найдем пару 
- * с наименьшим первым индексом (i), как того требует условие.
+ * Ключевая особенность: для поиска используется HashMap и два прохода по массиву.
+ * Первый проход заполняет словарь числами и их индексами (первым и последним).
+ * Второй проход находит пару с наименьшим первым индексом (i).
+ * Это позволяет достичь сложности O(n).
  * </p>
  * 
  * Условие задачи:
@@ -19,39 +22,65 @@ import java.util.Scanner;
  */
 public class Task12 {
 
-    /** Значение индекса, означающее «пара не найдена». */
-    private static final int NOT_FOUND = -1;
-
-     /**
-     * Ищет пару индексов (i, j), i &lt; j, с суммой target.
-     *
-     * <p>Для каждого left перебираем right от left+1 до конца массива.
-     * Возрастание left и right обеспечивает, что первая найденная пара
-     * имеет минимальный left, а при равном left — минимальный right.
-     *
+    /**
+     * Ищет пару элементов, сумма которых равна заданному значению.
+     * 
      * @param array  входной массив чисел
      * @param target искомая сумма
      * @return пара индексов или {-1, -1}, если пары нет
      */
-    public static int[] findPair(int[] array, long target) {
-        int arrayLength = array.length;
+    public int[] findPair(int[] array, long target) {
+        // Храним: Число -> [первый индекс, последний индекс]
+        Map<Long, int[]> map = new HashMap<>();
 
-        // Внешний цикл перебирает left по возрастанию: первая найденная
-        // пара гарантированно имеет минимальный left.
-        for (int left = 0; left < arrayLength; left++) {
-            int right = left + 1;
-            // Внутренний цикл перебирает right от left+1: неравенство
-            // left < right и минимальность right при данном left.
-            while (right < arrayLength) {
-                long sum = (long) array[left] + (long) array[right];
-                if (sum == target) {
-                    return new int[] {left, right};
-                }
-                right++;
+        for (int i = 0; i < array.length; i++) {
+            long val = (long) array[i];
+            if (!map.containsKey(val)) {
+                // Первое вхождение: записываем и как первый, и как последний
+                map.put(val, new int[]{i, i});
+            } else {
+                // Повторное вхождение: обновляем только последний индекс
+                map.get(val)[1] = i;
             }
         }
 
-        return new int[] {NOT_FOUND, NOT_FOUND};
+        int bestI = -1;
+        int bestJ = -1;
+
+        for (int i = 0; i < array.length; i++) {
+            long complement = target - array[i];
+
+            if (map.containsKey(complement)) {
+                int[] indices = map.get(complement);
+                
+                // Пробуем взять первый индекс (для минимального j)
+                int j = indices[0];
+                if (i != j) {
+                    int currentI = Math.min(i, j);
+                    int currentJ = Math.max(i, j);
+                    if (bestI == -1 || currentI < bestI || (currentI == bestI && currentJ < bestJ)) {
+                        bestI = currentI;
+                        bestJ = currentJ;
+                    }
+                }
+                
+                // Также пробуем взять последний индекс 
+                j = indices[1];
+                if (i != j) {
+                    int currentI = Math.min(i, j);
+                    int currentJ = Math.max(i, j);
+                    if (bestI == -1 || currentI < bestI || (currentI == bestI && currentJ < bestJ)) {
+                        bestI = currentI;
+                        bestJ = currentJ;
+                    }
+                }
+            }
+        }
+
+        if (bestI != -1) {
+            return new int[]{bestI, bestJ};
+        }
+        return new int[]{-1, -1};
     }
 
     /**
@@ -61,21 +90,22 @@ public class Task12 {
      * @param args аргументы командной строки (не используются)
      */
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        try (Scanner scanner = new Scanner(System.in)) {
+            System.out.print("Введите длину массива: ");
+            int arrayLength = scanner.nextInt();
 
-        System.err.print("Введите длину массива: ");
-        int arrayLength = scanner.nextInt();
+            System.out.print("Введите искомую сумму: ");
+            long targetSum = scanner.nextLong();
 
-        System.err.print("Введите искомую сумму: ");
-        long targetSum = scanner.nextLong();
+            int[] numbers = new int[arrayLength];
+            System.out.print("Введите " + arrayLength + " чисел через пробел: ");
+            for (int index = 0; index < arrayLength; index++) {
+                numbers[index] = scanner.nextInt();
+            }
 
-        int[] numbers = new int[arrayLength];
-        System.err.print("Введите " + arrayLength + " чисел через пробел: ");
-        for (int index = 0; index < arrayLength; index++) {
-            numbers[index] = scanner.nextInt();
+            Task12 solver = new Task12();
+            int[] result = solver.findPair(numbers, targetSum);
+            System.out.println(result[0] + " " + result[1]);
         }
-
-        int[] result = findPair(numbers, targetSum);
-        System.out.println(result[0] + " " + result[1]);
     }
 }
