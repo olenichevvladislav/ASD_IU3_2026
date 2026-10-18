@@ -4,37 +4,49 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 
 public class Task59Test {
-    Task59 solver = new Task59();
+    private final Task59 solver = new Task59();
 
-    // Первый простой случай
     @Test
-    public void testIdentityMatrix() {
+    public void shouldCalculateDeterminantForIdentityMatrix() {
+        int[][] matrix = {{1, 0, 0}, {0, 1, 0}, {0, 0, 1}};
+        int expected = 1;
         
-        int[][] a = {{1, 0, 0}, {0, 1, 0}, {0, 0, 1}};
-        Assertions.assertEquals(1, solver.calculateDeterminant(a));
-    }
-
-    // Второй простой случай
-    @Test
-    public void testNullMatrix() {
-        Assertions.assertEquals(0, solver.calculateDeterminant(null));
+        int actual = solver.calculateDeterminant(matrix);
+        
+        Assertions.assertEquals(expected, actual);
     }
 
     @Test
-    public void testRandomMatrix() {
-        // произвольная матрица
-        int[][] a = {
+    public void shouldReturnZeroForNullMatrix() {
+        int expected = 0;
+        
+        int actual = solver.calculateDeterminant(null);
+        
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldCalculateDeterminantForRandomMatrix() {
+        // Произвольная матрица
+        int[][] matrix = {
             {2, 5, 3}, 
             {1, 8, 4}, 
             {7, 6, 9}
         };
-        // Определитель = 41
-        Assertions.assertEquals(41, solver.calculateDeterminant(a));
+        int expected = 41; // Определитель = 41
+        
+        int actual = solver.calculateDeterminant(matrix);
+        
+        Assertions.assertEquals(expected, actual);
     }
 
     @Test
-    public void testEmptyMatrix() {
-        int[][] a = {};
-        Assertions.assertEquals(0, solver.calculateDeterminant(a));
+    public void shouldReturnZeroForEmptyMatrix() {
+        int[][] matrix = {};
+        int expected = 0;
+        
+        int actual = solver.calculateDeterminant(matrix);
+        
+        Assertions.assertEquals(expected, actual);
     }
 }

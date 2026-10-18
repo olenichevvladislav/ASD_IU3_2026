@@ -4,52 +4,33 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 
 public class Task47Test {
-    Task47 solver = new Task47();
+    private final Task47 solver = new Task47();
 
     @Test
-    public void testSquareMatrix() {
-        // Матрица 2x2
-        // 1 2
-        // 3 4
-        // После поворота:
-        // 3 1
-        // 4 2
-        int[][] a = {{1, 2}, {3, 4}};
+    public void shouldRotateSquareMatrix() {
+        int[][] actual = {{1, 2}, {3, 4}};
         int[][] expected = {{3, 1}, {4, 2}};
-        Assertions.assertArrayEquals(expected, solver.rotate90(a));
+        Assertions.assertArrayEquals(expected, solver.rotate90(actual));
     }
 
     @Test
-    public void testRectangularMatrix() {
-        // Матрица 2x3
-        // 1 2 3
-        // 4 5 6
-        // После поворота должна стать 3x2:
-        // 4 1
-        // 5 2
-        // 6 3
-        int[][] a = {{1, 2, 3}, {4, 5, 6}};
+    public void shouldRotateRectangularMatrix() {
+        int[][] actual = {{1, 2, 3}, {4, 5, 6}};
         int[][] expected = {{4, 1}, {5, 2}, {6, 3}};
-        Assertions.assertArrayEquals(expected, solver.rotate90(a));
-    }
-
-     @Test
-    public void testSingleRow() {
-        // Матрица 1x3
-        // 1 2 3
-        // После поворота станет 3x1:
-        // 1
-        // 2
-        // 3
-        int[][] a = {{1, 2, 3}};
-        int[][] expected = {{1}, {2}, {3}};
-        Assertions.assertArrayEquals(expected, solver.rotate90(a));
+        Assertions.assertArrayEquals(expected, solver.rotate90(actual));
     }
 
     @Test
-    public void testEmptyMatrix() {
-        int[][] a = {};
+    public void shouldRotateSingleRow() {
+        int[][] actual = {{1, 2, 3}};
+        int[][] expected = {{1}, {2}, {3}};
+        Assertions.assertArrayEquals(expected, solver.rotate90(actual));
+    }
+
+    @Test
+    public void shouldHandleEmptyMatrix() {
+        int[][] actual = {};
         int[][] expected = {};
-        Assertions.assertArrayEquals(expected, solver.rotate90(a));
+        Assertions.assertArrayEquals(expected, solver.rotate90(actual));
     }
 }
