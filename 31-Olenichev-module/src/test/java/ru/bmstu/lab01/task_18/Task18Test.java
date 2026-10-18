@@ -29,4 +29,26 @@ public class Task18Test {
         
         Assertions.assertArrayEquals(expected, a);
     }
+
+     @Test
+    public void testOnlyOdd() {
+        // Массив без четных чисел. Ничего не должно измениться.
+        int[] a = {1, 3, 5, 7};
+        int[] expected = {1, 3, 5, 7};
+        
+        solver.sortEvenDescending(a);
+        
+        Assertions.assertArrayEquals(expected, a);
+    }
+
+    @Test
+    public void testEmptyArray() {
+        // Without RunningError for empty array.
+        int[] a = {};
+        int[] expected = {};
+        
+        solver.sortEvenDescending(a);
+        
+        Assertions.assertArrayEquals(expected, a);
+    }
 }
