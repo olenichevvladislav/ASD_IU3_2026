@@ -18,52 +18,63 @@ import java.util.Scanner;
  */
 public class Task18 {
     
-    /**
+     /**
      * Сортирует только чётные элементы массива по убыванию.
      * 
      * @param a исходный массив целых чисел
      */
     public void sortEvenDescending(int[] a) {
-        // 1. Считаем количество чётных чисел
         int evenCount = 0;
         for (int num : a) {
-            if (num % 2 == 0) {
-                evenCount++;
-            }
+            if (num % 2 == 0) evenCount++;
         }
+        if (evenCount <= 1) return;
 
-        // Если чётных нет или одно — сортировать нечего
-        if (evenCount <= 1) {
-            return;
-        }
-
-        // 2. Собираем чётные числа в отдельный массив
         int[] evens = new int[evenCount];
         int index = 0;
         for (int num : a) {
             if (num % 2 == 0) {
-                evens[index] = num;
-                index++;
+                evens[index++] = num;
             }
         }
         
-        // 3. Сортируем массив evens по убыванию (пузырьком)
-        for (int i = 0; i < evens.length - 1; i++) {
-            for (int j = 0; j < evens.length - 1 - i; j++) {
-                if (evens[j] < evens[j + 1]) {
-                    int temp = evens[j];
-                    evens[j] = evens[j + 1];
-                    evens[j + 1] = temp;
-                }
-            }
-        }
+        // Используем быструю сортировку (QuickSort) вместо пузырька, так как сложность n^2 не принимается
+        quickSort(evens, 0, evens.length - 1);
 
-        // 4. Возвращаем отсортированные чётные на их места
         index = 0;
         for (int i = 0; i < a.length; i++) {
             if (a[i] % 2 == 0) {
                 a[i] = evens[index++];
             }
+        }
+    }
+
+    /**
+     * Быстрая сортировка (QuickSort) по убыванию.
+     */
+    private void quickSort(int[] arr, int low, int high) {
+        if (low < high) {
+            int pivot = arr[high];
+            int i = (low - 1);
+
+            for (int j = low; j < high; j++) {
+                // Для убывания: если текущий элемент больше опорного
+                if (arr[j] > pivot) {
+                    i++;
+                    int temp = arr[i];
+                    arr[i] = arr[j];
+                    arr[j] = temp;
+                }
+            }
+
+            int temp = arr[i + 1];
+            arr[i + 1] = arr[high];
+            arr[high] = temp;
+
+            int pi = i + 1;
+
+            quickSort(arr, low, pi - 1);
+            quickSort(arr, pi + 1, high);
         }
     }
 
